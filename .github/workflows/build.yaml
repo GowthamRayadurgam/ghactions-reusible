@@ -18,6 +18,10 @@ on:
             description: Path to a deployment package
             type: string
             required: true
+        global-json-file:
+            description: Path to global.json file for dotnet version.
+            required: false
+            type: string
 
     secrets:
        personal_access_token:
@@ -33,6 +37,7 @@ jobs:
             project-type: ${{ inputs.project-type }}
             node-version: ${{ inputs.node-version }}
             dotnet-version: ${{ inputs.dotnet-version }}
+            global-json-file: ${{ inputs.global-json-file }}
 
         - if: ${{ inputs.project-type == 'backend'}}
           name: 'build the app'

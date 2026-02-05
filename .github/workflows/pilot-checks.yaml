@@ -15,6 +15,15 @@ on:
             type: string
             required: false
 
+        azure_functionapp_package_path:
+            description: Path to a deployment package
+            type: string
+            required: true
+        global-json-file:
+            description: Path to global.json file for dotnet version
+            required: false
+            type: string
+
     secrets:
        personal_access_token:
         required: true
@@ -29,6 +38,7 @@ jobs:
             project-type: ${{ inputs.project-type }}
             node-version: ${{ inputs.node-version }}
             dotnet-version: ${{ inputs.dotnet-version }}
+            global-json-file: ${{ inputs.global-json-file }}
 
         - if: ${{ inputs.project-type == 'frontend'}}
           name: Linting and testing the code
@@ -37,6 +47,3 @@ jobs:
            npm run typecheck
            npm test -- --ci
            npm audit --audit-level=high
-
-
-            
