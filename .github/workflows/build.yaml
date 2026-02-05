@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Code setup and caching dependencies
-          uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup/initial-setup.yml@main
+          uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup@main
           with:
             project-type: ${{ inputs.project-type }}
             node-version: ${{ inputs.node-version }}
