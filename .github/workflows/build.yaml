@@ -22,6 +22,10 @@ on:
             description: Path to cache dependencies (like node_modules, ~/.m2/repository, etc.)
             required: false
             type: string
+        build-directory:
+            description: Path to run the build command from
+            required: false
+            type: string
 
     secrets:
        personal_access_token:
@@ -31,14 +35,14 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-        # - name: Code setup and caching dependencies
-        #   uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup@main
-        #   with:
-        #     project-type: ${{ inputs.project-type }}
-        #     node-version: ${{ inputs.node-version }}
-        #     dotnet-version: ${{ inputs.dotnet-version }}
-        #     cache-dependency-path: ${{ inputs.cache-dependency-path }}
-        #     azure_functionapp_package_path: ${{ inputs.azure_functionapp_package_path }}
+        - name: Code setup and caching dependencies
+          uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup@main
+          with:
+            project-type: ${{ inputs.project-type }}
+            node-version: ${{ inputs.node-version }}
+            dotnet-version: ${{ inputs.dotnet-version }}
+            cache-dependency-path: ${{ inputs.cache-dependency-path }}
+            azure_functionapp_package_path: ${{ inputs.azure_functionapp_package_path }}
 
         - if: ${{ inputs.project-type == 'backend'}}
           name: 'build the app'
@@ -47,3 +51,9 @@ jobs:
             pushd './${{ inputs.azure_functionapp_package_path }}'
             dotnet build --configuration Release --output ./output
             popd
+        - name: artifact upload
+          uses: actions/upload-artifact@v4
+          with:
+           name: build-artifacts
+           path: |
+             ${{ inputs.build-directory }}
