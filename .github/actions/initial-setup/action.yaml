@@ -5,14 +5,11 @@ inputs:
     project-type:
         description: frontend | backend
         required: true
-        type: string
     node-version:
         description: Node.js version to setup
         required: true
-        type: string
     dotnet-version:
         description: DotNet version to setup
-        type: string
         required: true
 
 runs:
