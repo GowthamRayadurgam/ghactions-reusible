@@ -1,0 +1,75 @@
+name: Project Setup 
+description: Checkout code and cache dependencies
+
+inputs:
+    project-type:
+        description: frontend | backend
+        required: true
+        type: string
+    node-version:
+        description: Node.js version to setup
+        required: true
+        type: string
+    dotnet-version:
+        description: DotNet version to setup
+        type: string
+        required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - if: ${{ inputs.project-type == 'frontend'}}
+      name: setup node
+      uses: actions/setup-node@v5
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'npm'
+
+    - if: ${{ inputs.project-type == 'backend'}}
+      name: setup dotnet
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+        cache: true
+        
+
+
+
+
+
+###################################################################################################
+
+#   cache-key:
+#     description: Base cache key
+#     required: true
+#     type: string
+  
+#   restore-keys:
+#     description: Restore keys in case base cache hit fails
+#     required: false
+#     type: string
+
+#   cache-path:
+#     description: Path to cache (node_modules, ~/.m2, ~/.gradle, etc.)
+#     required: true
+#     type: string
+
+#   lock-file:
+#     description: Dependency lock file used for cache hashing
+#     required: true
+#     type: string
+
+    # Cache dependencies
+    # - name: Cache dependencies
+    #   id: dependency-caching
+    #   uses: actions/cache@v4
+    #   env:
+    #     cache-name: cache-node-modules
+    #   with:
+    #     path: ${{ inputs.cache-path }}
+    #     key: ${{ inputs.cache-key }}-${{ env.cache-name }}-${{ hashFiles(inputs.lock-file) }}
+    #     restore-keys: |
+    #       ${{ inputs.restore-keys }}

@@ -1,0 +1,42 @@
+name: Build
+on:
+  workflow_call:
+    inputs:
+        project-type:
+            description: frontend | backend
+            required: true
+            type: string
+        node-version:
+            description: Node.js version to setup
+            required: true
+            type: string
+        dotnet-version:
+            description: DotNet version to setup
+            type: string
+            required: true
+        azure_functionapp_package_path:
+            description: Path to a deployment package
+            type: string
+            required: true
+
+    secrets:
+       personal_access_token:
+        required: true
+        
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Code setup and caching dependencies
+          uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup/initial-setup.yml@main
+          with:
+            project-type: ${{ inputs.project-type }}
+            node-version: ${{ inputs.node-version }}
+            dotnet-version: ${{ inputs.dotnet-version }}
+
+        - name: 'build the app'
+          shell: bash
+          run: |
+            pushd './${{ inputs.azure_functionapp_package_path }}'
+            dotnet build --configuration Release --output ./output
+            popd
