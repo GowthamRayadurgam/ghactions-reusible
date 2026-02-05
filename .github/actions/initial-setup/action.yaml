@@ -35,6 +35,11 @@ runs:
         cache: true
         cache-dependency-path: ${{ inputs.cache-dependency-path }}
 
+    - if: ${{ inputs.project-type == 'backend'}}
+      name: Restore dependencies
+      shell: bash
+      run: dotnet restore
+
         
 
 
