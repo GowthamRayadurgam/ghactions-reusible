@@ -8,12 +8,12 @@ on:
             type: string
         node-version:
             description: Node.js version to setup
-            required: true
+            required: false
             type: string
         dotnet-version:
             description: DotNet version to setup
             type: string
-            required: true
+            required: false
 
     secrets:
        personal_access_token:

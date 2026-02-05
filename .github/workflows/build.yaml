@@ -8,12 +8,12 @@ on:
             type: string
         node-version:
             description: Node.js version to setup
-            required: true
+            required: false
             type: string
         dotnet-version:
             description: DotNet version to setup
             type: string
-            required: true
+            required: false
         azure_functionapp_package_path:
             description: Path to a deployment package
             type: string
