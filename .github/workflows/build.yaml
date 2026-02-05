@@ -38,6 +38,7 @@ jobs:
             node-version: ${{ inputs.node-version }}
             dotnet-version: ${{ inputs.dotnet-version }}
             cache-dependency-path: ${{ inputs.cache-dependency-path }}
+            azure_functionapp_package_path: ${{ inputs.azure_functionapp_package_path }}
 
         - if: ${{ inputs.project-type == 'backend'}}
           name: 'build the app'

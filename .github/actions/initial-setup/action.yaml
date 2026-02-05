@@ -14,6 +14,10 @@ inputs:
     cache-dependency-path:
         description: Path to cache dependencies (like node_modules, ~/.m2/repository, etc.)
         required: false
+    azure_functionapp_package_path:
+        description: Path to a deployment package
+        required: true
+
 runs:
   using: "composite"
   steps:
@@ -38,7 +42,7 @@ runs:
     - if: ${{ inputs.project-type == 'backend'}}
       name: Restore dependencies
       shell: bash
-      run: dotnet restore
+      run: dotnet restore ${{ inputs.azure_functionapp_package_path }}
 
         
 
