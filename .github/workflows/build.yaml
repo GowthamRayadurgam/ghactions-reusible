@@ -31,14 +31,14 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-        - name: Code setup and caching dependencies
-          uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup@main
-          with:
-            project-type: ${{ inputs.project-type }}
-            node-version: ${{ inputs.node-version }}
-            dotnet-version: ${{ inputs.dotnet-version }}
-            cache-dependency-path: ${{ inputs.cache-dependency-path }}
-            azure_functionapp_package_path: ${{ inputs.azure_functionapp_package_path }}
+        # - name: Code setup and caching dependencies
+        #   uses: GowthamRayadurgam/ghactions-reusible/.github/actions/initial-setup@main
+        #   with:
+        #     project-type: ${{ inputs.project-type }}
+        #     node-version: ${{ inputs.node-version }}
+        #     dotnet-version: ${{ inputs.dotnet-version }}
+        #     cache-dependency-path: ${{ inputs.cache-dependency-path }}
+        #     azure_functionapp_package_path: ${{ inputs.azure_functionapp_package_path }}
 
         - if: ${{ inputs.project-type == 'backend'}}
           name: 'build the app'
