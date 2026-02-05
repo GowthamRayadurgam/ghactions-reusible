@@ -22,7 +22,7 @@ on:
     secrets:
        personal_access_token:
         required: true
-        
+
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -34,7 +34,8 @@ jobs:
             node-version: ${{ inputs.node-version }}
             dotnet-version: ${{ inputs.dotnet-version }}
 
-        - name: 'build the app'
+        - if: ${{ inputs.project-type == 'backend'}}
+          name: 'build the app'
           shell: bash
           run: |
             pushd './${{ inputs.azure_functionapp_package_path }}'
