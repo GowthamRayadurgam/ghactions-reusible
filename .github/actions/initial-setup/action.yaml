@@ -11,10 +11,9 @@ inputs:
     dotnet-version:
         description: DotNet version to setup
         required: true
-    global-json-file:
-        description: Path to global.json file for dotnet version
+    cache-dependency-path:
+        description: Path to cache dependencies (like node_modules, ~/.m2/repository, etc.)
         required: false
-
 runs:
   using: "composite"
   steps:
@@ -34,7 +33,8 @@ runs:
       with:
         dotnet-version: ${{ inputs.dotnet-version }}
         cache: true
-        global-json-file: ${{inputs.global-json-file}}
+        cache-dependency-path: ${{ inputs.cache-dependency-path }}
+
         
 
 

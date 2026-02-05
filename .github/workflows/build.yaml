@@ -18,8 +18,8 @@ on:
             description: Path to a deployment package
             type: string
             required: true
-        global-json-file:
-            description: Path to global.json file for dotnet version.
+        cache-dependency-path:
+            description: Path to cache dependencies (like node_modules, ~/.m2/repository, etc.)
             required: false
             type: string
 
@@ -37,7 +37,7 @@ jobs:
             project-type: ${{ inputs.project-type }}
             node-version: ${{ inputs.node-version }}
             dotnet-version: ${{ inputs.dotnet-version }}
-            global-json-file: ${{ inputs.global-json-file }}
+            cache-dependency-path: ${{ inputs.cache-dependency-path }}
 
         - if: ${{ inputs.project-type == 'backend'}}
           name: 'build the app'
