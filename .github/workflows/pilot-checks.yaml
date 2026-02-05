@@ -14,11 +14,6 @@ on:
             description: DotNet version to setup
             type: string
             required: false
-
-        azure_functionapp_package_path:
-            description: Path to a deployment package
-            type: string
-            required: true
         global-json-file:
             description: Path to global.json file for dotnet version
             required: false
