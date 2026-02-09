@@ -23,6 +23,7 @@ runs:
             --name "$SECRET" \
             --query value -o tsv)
 
-          echo "::add-mask::$VALUE"
           echo "$SECRET=$VALUE" >> $GITHUB_ENV
         done
+  
+# echo "::add-mask::$VALUE"
