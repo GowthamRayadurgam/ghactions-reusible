@@ -29,6 +29,11 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    permissions:
+     id-token: write
+     actions: read
+     contents: read
+     
     steps:
         - run: |
             echo "Run ID: ${{ github.event.workflow_run.id }}"
