@@ -81,5 +81,5 @@ jobs:
           id: function-deploy
           with:
            app-name: ${{ inputs.azure_functionapp_name }}
-           package: '${{ inputs.azure_functionapp_package_path }}/output'
+#           package: '${{ inputs.azure_functionapp_package_path }}/output'
         
