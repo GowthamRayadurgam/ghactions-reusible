@@ -29,22 +29,17 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
-    permissions:
-     id-token: write
-     actions: read
-     contents: read
-     
     steps:
-        - run: |
-            echo "Run ID: ${{ github.event.workflow_run.id }}"
-            echo "Workflow: ${{ github.event.workflow_run.name }}"
+        # - run: |
+        #     echo "Run ID: ${{ github.event.workflow_run.id }}"
+        #     echo "Workflow: ${{ github.event.workflow_run.name }}"
 
-        - name: download artifact
-          uses: actions/download-artifact@v4
-          with:
-           name: build-artifacts-${{ inputs.project-type}}
-           github-token: ${{ secrets.GHACTIONS_PAT }}
-           run-id: ${{ github.event.workflow_run.id }}
+        # - name: download artifact
+        #   uses: actions/download-artifact@v4
+        #   with:
+        #    name: build-artifacts-${{ inputs.project-type}}
+        #    github-token: ${{ secrets.GHACTIONS_PAT }}
+        #    run-id: ${{ github.event.workflow_run.id }}
 
         - name: Azure login
           uses: azure/login@v2
