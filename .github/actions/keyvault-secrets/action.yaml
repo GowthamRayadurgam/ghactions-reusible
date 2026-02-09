@@ -22,8 +22,7 @@ runs:
             --vault-name "${{ inputs.keyvault-name }}" \
             --name "$SECRET" \
             --query value -o tsv)
-
+          echo "::add-mask::$VALUE"
           echo "$SECRET=$VALUE" >> $GITHUB_ENV
+          echo "Secret '$SECRET' fetched successfully. Value length: ${#VALUE}"
         done
-  
-# echo "::add-mask::$VALUE"
