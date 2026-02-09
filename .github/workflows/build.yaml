@@ -58,7 +58,7 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             name: build-artifacts-${{ inputs.project-type}}
-            path: ./${{ inputs.azure_functionapp_package_path }}/${{ inputs.project-type }}.zip
+            path: ${{ inputs.azure_functionapp_package_path }}/${{ inputs.project-type }}.zip
 
         # - name: artifact upload
         #   uses: actions/upload-artifact@v4
