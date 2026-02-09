@@ -1,0 +1,28 @@
+name: "Azure Key Vault Secret Loader"
+description: "Fetch secrets from Azure Key Vault and expose them as environment variables"
+
+inputs:
+  keyvault-name:
+    description: "Azure Key Vault name"
+    required: false
+  secrets:
+    description: "Comma-separated list of secret names"
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Fetch secrets from Key Vault
+      shell: bash
+      run: |
+        IFS=',' read -ra SECRET_LIST <<< "${{ inputs.secrets }}"
+
+        for SECRET in "${SECRET_LIST[@]}"; do
+          VALUE=$(az keyvault secret show \
+            --vault-name "${{ inputs.keyvault-name }}" \
+            --name "$SECRET" \
+            --query value -o tsv)
+
+          echo "::add-mask::$VALUE"
+          echo "$SECRET=$VALUE" >> $GITHUB_ENV
+        done

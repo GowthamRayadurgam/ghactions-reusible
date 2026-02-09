@@ -1,0 +1,80 @@
+name: Build
+on:
+  workflow_call:
+    inputs:
+        project-type:
+            description: frontend | backend
+            required: true
+            type: string
+        
+        environment:
+            description: deployment environment like dev, staging, prod etc.
+            required: false
+            type: string
+
+        secrets:
+            description: "Comma-separated list of secret names"
+            type: string
+            required: false
+
+        azure_functionapp_name:
+            description: Name of the Azure Function App to deploy to
+            type: string
+            required: true
+        azure_functionapp_package_path:
+            description: Path to a deployment package
+            type: string
+            required: false
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "Run ID: ${{ github.event.workflow_run.id }}"
+            echo "Workflow: ${{ github.event.workflow_run.name }}"
+
+        - name: download artifact
+          uses: actions/download-artifact@v5
+          with:
+           name: build-artifacts
+           github-token: ${{ secrets.GHACTIONS_PAT }}
+           run-id: ${{ github.event.workflow_run.id }}
+
+        - name: Azure login
+          uses: azure/login@v2
+          with:
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+        # - name: Retrieve secret from Key Vault
+        #   uses: gowthamrayadurgam/ghactions-reusible/.github/actions/keyvault-retrieve-secret@main
+        #   with:
+        #     keyvault-name: ${{ secrets.AZURE_KEYVAULT_NAME }}
+        #     secrets: ${{ inputs.secrets }}
+
+        # - name: Manual approval before deployment
+        #   uses: trstringer/manual-approval@v1
+        #   with:
+        #     secret: ${{ github.TOKEN }}
+        #     approvers: user1,user2,org-team1
+        #     minimum-approvals: 1
+        #     issue-title: "Deploying v1.3.5 to prod from staging"
+        #     issue-body: "Please approve or deny the deployment of version v1.3.5."
+        #     issue-body-file-path: relative/file_path/wrt/repo/root
+        #     exclude-workflow-initiator-as-approver: false
+        #     fail-on-denial: true
+        #     additional-approved-words: ''
+        #     additional-denied-words: ''
+        #     polling-interval-seconds: 10
+
+        - name: 'Deploy to Azure Functions'
+          uses: Azure/functions-action@v1
+          id: function-deploy
+          with:
+           app-name: ${{ inputs.azure_functionapp_name }}
+           package: '${{ inputs.azure_functionapp_package_path }}/output'
+
+        
+        
