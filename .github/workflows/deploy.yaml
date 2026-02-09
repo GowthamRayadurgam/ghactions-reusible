@@ -37,7 +37,7 @@ jobs:
         - name: download artifact
           uses: actions/download-artifact@v4
           with:
-           name: build-artifacts
+           name: build-artifacts-${{ inputs.project-type}}
            github-token: ${{ secrets.GHACTIONS_PAT }}
            run-id: ${{ github.event.workflow_run.id }}
 
