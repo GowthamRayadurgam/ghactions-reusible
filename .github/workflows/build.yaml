@@ -49,6 +49,7 @@ jobs:
           shell: bash
           run: |
             pushd './${{ inputs.azure_functionapp_package_path }}'
+            dotnet build
             dotnet publish --configuration Release --output ./output
             cd output
             zip -r ../${{ inputs.project-type }}.zip *
