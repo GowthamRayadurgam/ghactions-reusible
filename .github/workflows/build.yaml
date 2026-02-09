@@ -49,11 +49,20 @@ jobs:
           shell: bash
           run: |
             pushd './${{ inputs.azure_functionapp_package_path }}'
-            dotnet build --configuration Release --output ./output
+            dotnet publish --configuration Release --output ./output
+            cd output
+            zip -r ../${{ inputs.project-type }}.zip *
             popd
-        - name: artifact upload
+        
+        - name: Upload build artifacts
           uses: actions/upload-artifact@v4
           with:
-           name: build-artifacts-${{ inputs.project-type}}
-           path: |
-             ${{ inputs.build-directory }}
+            name: build-artifacts-${{ inputs.project-type}}
+            path: ./${{ inputs.azure_functionapp_package_path }}/${{ inputs.project-type }}.zip
+
+        # - name: artifact upload
+        #   uses: actions/upload-artifact@v4
+        #   with:
+        #    name: build-artifacts-${{ inputs.project-type}}
+        #    path: |
+        #      ${{ inputs.build-directory }}
