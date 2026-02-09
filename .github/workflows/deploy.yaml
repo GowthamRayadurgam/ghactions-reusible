@@ -35,7 +35,7 @@ jobs:
             echo "Workflow: ${{ github.event.workflow_run.name }}"
 
         - name: download artifact
-          uses: actions/download-artifact@v5
+          uses: actions/download-artifact@v4
           with:
            name: build-artifacts
            github-token: ${{ secrets.GHACTIONS_PAT }}
