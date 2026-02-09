@@ -38,8 +38,8 @@ on:
         required: true
 
 jobs:
-  Build:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
     steps:
         - name: Azure login
           uses: azure/login@v2
