@@ -25,6 +25,10 @@ on:
             description: Path to a deployment package
             type: string
             required: false
+        artifact-name:
+            required: false
+            type: string
+
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -37,16 +41,16 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-        # - run: |
-        #     echo "Run ID: ${{ github.event.workflow_run.id }}"
-        #     echo "Workflow: ${{ github.event.workflow_run.name }}"
+        - run: |
+            echo "Run ID: ${{ github.event.workflow_run.id }}"
+            echo "Workflow: ${{ github.event.workflow_run.name }}"
 
-        # - name: download artifact
-        #   uses: actions/download-artifact@v4
-        #   with:
-        #    name: build-artifacts-${{ inputs.project-type}}
-        #    github-token: ${{ secrets.GHACTIONS_PAT }}
-        #    run-id: ${{ github.event.workflow_run.id }}
+        - name: download artifact
+          uses: actions/download-artifact@v4
+          with:
+           name: build-artifacts-${{ inputs.project-type}}
+           github-token: ${{ secrets.GHACTIONS_PAT }}
+           run-id: ${{ github.event.workflow_run.id }}
 
         - name: Azure login
           uses: azure/login@v2
