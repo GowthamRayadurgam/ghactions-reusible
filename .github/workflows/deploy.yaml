@@ -53,7 +53,7 @@ jobs:
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
         - name: Retrieve secret from Key Vault
-          uses: gowthamrayadurgam/ghactions-reusible/.github/actions/keyvault-retrieve-secret@main
+          uses: gowthamrayadurgam/ghactions-reusible/.github/actions/keyvault-secrets@main
           with:
             keyvault-name: ${{ inputs.azure_keyvault_name }}
             secrets: ${{ inputs.secrets }}
